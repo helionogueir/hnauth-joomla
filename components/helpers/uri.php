@@ -17,13 +17,18 @@ class HnAuthUri
             $uri = null;
             $model = JModelLegacy::getInstance('Credential', 'HnAuthModel', array('ignore_request' => true));
             if ($credential = $model->findAllByCode('standard')) {
-                $payload = array(
-                    "exp" => time() + 30,
-                    "publicOrAccessKey" => $credential->publickey,
-                    "data" => $data
-                );
-                if ($token = JWT::encode($payload, $credential->secretkey, 'HS256')) {
-                    $uri = preg_replace("/(\:token)/", $token, $credential->uri);
+                if (!empty($credential->uri) && !empty($credential->publickey) && !empty($credential->secretkey)) {
+                    $payload = array(
+                        "exp" => time() + 30,
+                        "publicOrAccessKey" => $credential->publickey,
+                        "data" => $data
+                    );
+                    if ($token = JWT::encode($payload, $credential->secretkey, 'HS256')) {
+                        $pattern = "/(\:token)/";
+                        if (preg_match($pattern, $credential->uri)) {
+                            $uri = preg_replace($pattern, $token, $credential->uri);
+                        }
+                    }
                 }
             }
             return $uri;

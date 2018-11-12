@@ -18,3 +18,6 @@ CREATE TABLE IF NOT EXISTS `#__hnauth_credential` (
 )
 COLLATE='utf8_unicode_ci'
 ENGINE=InnoDB;
+
+/* Fist Register */
+INSERT INTO `#__hnauth_credential` (`id`, `code`, `title`, `uri`, `publickey`, `secretkey`, `obs`) VALUES (1, 'standard', 'Standard', 'http://example.com/:token', '', '', 'Standard Register');

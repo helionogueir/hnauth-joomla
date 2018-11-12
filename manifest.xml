@@ -20,6 +20,7 @@
         </sql>
     </uninstall>
     <files folder="components">
+        <folder>helpers</folder>
         <folder>views</folder>
         <filename>controller.php</filename>
         <filename>hnauth.php</filename>
@@ -40,7 +41,6 @@
         </submenu>
         <files folder="administrator/components">
             <folder>controllers</folder>
-            <folder>helpers</folder>
             <folder>models</folder>
             <folder>sql</folder>
             <folder>tables</folder>
