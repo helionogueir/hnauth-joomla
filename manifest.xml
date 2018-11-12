@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="3.0" method="upgrade">
+    <name>COM_HNAUTH</name>
+    <creationDate>November 2018</creationDate>
+    <author>Helio Nogueira</author>
+    <authorEmail>helio.nogueir@gmail.com</authorEmail>
+    <authorUrl>https://github.com/helionogueir/</authorUrl>
+    <copyright>Copyright (c) 2018 Helio Nogueira</copyright>
+    <license>MIT</license>
+    <version>18.11.09</version>
+    <description>COM_HNAUTH_DESCRIPTION</description>
+    <install>
+        <sql>
+            <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+        </sql>
+    </install>
+    <uninstall>
+        <sql>
+            <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+        </sql>
+    </uninstall>
+    <files folder="components">
+        <folder>views</folder>
+        <filename>controller.php</filename>
+        <filename>hnauth.php</filename>
+        <filename>index.html</filename>
+    </files>
+    <languages>
+        <language tag="en-GB">language/en-GB/en-GB.com_hnauth.ini</language>
+        <language tag="pt-BR">language/pt-BR/pt-BR.com_hnauth.ini</language>
+    </languages>
+    <media destination="com_hnauth">
+        <filename>media/index.html</filename>
+        <folder>media/images</folder>
+    </media>
+    <administration>
+        <menu>COM_HNAUTH_SHORTNAME</menu>
+        <submenu>
+            <menu link="option=com_hnauth&amp;view=credentials" view="credentials">COM_HNAUTH_CREDENTIALS</menu>
+        </submenu>
+        <files folder="administrator/components">
+            <folder>controllers</folder>
+            <folder>helpers</folder>
+            <folder>models</folder>
+            <folder>sql</folder>
+            <folder>tables</folder>
+            <folder>views</folder>
+            <filename>controller.php</filename>
+            <filename>hnauth.php</filename>
+            <filename>index.html</filename>
+        </files>
+        <languages>
+            <language tag="en-GB">administrator/language/en-GB/en-GB.com_hnauth.sys.ini</language>
+            <language tag="en-GB">administrator/language/en-GB/en-GB.com_hnauth.ini</language>
+            <language tag="pt-BR">administrator/language/pt-BR/pt-BR.com_hnauth.sys.ini</language>
+            <language tag="pt-BR">administrator/language/pt-BR/pt-BR.com_hnauth.ini</language>
+        </languages>
+    </administration>
+</extension>
