@@ -4,30 +4,30 @@ defined('_JEXEC') or die('Restricted access');
 
 class HnAuthUri
 {
+    private $credential = null;
 
-    public function __construct()
+    public function __construct(\HnAuthCredential $credential)
     {
-        JLoader::register('JWT', JPATH_COMPONENT . DIRECTORY_SEPARATOR . "helpers" . DIRECTORY_SEPARATOR . "jwt.php");
-        JModelLegacy::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_hnauth/models', 'HnAuthModel');
+        $this->credential = $credential;
     }
 
     public function generate(array $data)
     {
         try {
             $uri = null;
-            $model = JModelLegacy::getInstance('Credential', 'HnAuthModel', array('ignore_request' => true));
-            if ($credential = $model->findAllByCode('standard')) {
-                if (!empty($credential->uri) && !empty($credential->publickey) && !empty($credential->secretkey)) {
-                    $payload = array(
-                        "exp" => time() + 30,
-                        "publicOrAccessKey" => $credential->publickey,
-                        "data" => $data
-                    );
-                    if ($token = JWT::encode($payload, $credential->secretkey, 'HS256')) {
-                        $pattern = "/(\:token)/";
-                        if (preg_match($pattern, $credential->uri)) {
-                            $uri = preg_replace($pattern, $token, $credential->uri);
-                        }
+            JLoader::register('JWT', JPATH_COMPONENT . DIRECTORY_SEPARATOR . "helpers" . DIRECTORY_SEPARATOR . "jwt.php");
+            if (!empty($this->credential->get('uri'))
+                && !empty($this->credential->get('publickey'))
+                && !empty($this->credential->get('secretkey'))) {
+                $payload = array(
+                    "exp" => time() + intval($this->credential->get('ttl')),
+                    "publicOrAccessKey" => $this->credential->get('publickey'),
+                    "data" => $data
+                );
+                if ($token = JWT::encode($payload, $this->credential->get('secretkey'), 'HS256')) {
+                    $pattern = "/(\:token)/";
+                    if (preg_match($pattern, $this->credential->get('uri'))) {
+                        $uri = preg_replace($pattern, $token, $this->credential->get('uri'));
                     }
                 }
             }

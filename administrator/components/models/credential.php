@@ -7,11 +7,16 @@ class HnAuthModelCredential extends JModelAdmin
 
     private $_fields = array(
         'id',
-        'code',
+        'template',
+        'usergroupid',
+        'authname',
         'title',
         'uri',
         'publickey',
         'secretkey',
+        'ttl',
+        'algorithm',
+        'behaviors',
         'obs',
         'created',
         'modified',
@@ -51,16 +56,16 @@ class HnAuthModelCredential extends JModelAdmin
         return $data;
     }
 
-    public function findAllByCode($code)
+    public function findRowByAuthname($authname)
     {
         $data = null;
-        if (!empty($code)) {
+        if (!empty($authname)) {
             $db = JFactory::getDbo();
             $query = $db->getQuery(true);
             $query->select(implode(",", $this->_fields))
                 ->from($db->quoteName('#__hnauth_credential'))
                 ->where('published = 1')
-                ->where("code = '{$code}'");
+                ->where("authname = '{$authname}'");
             if ($row = $db->setQuery($query)->loadObject()) {
                 $data = $row;
             }

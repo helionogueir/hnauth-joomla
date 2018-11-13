@@ -5,29 +5,40 @@ defined('_JEXEC') or die('Restricted access');
 class HnAuthGroups
 {
 
-    public function __construct()
+    private $user = null;
+    private $credential = null;
+
+    public function __construct(\HnAuthCredential $credential, \Joomla\CMS\User\User $user)
     {
         JLoader::register('HnAuthGroups', JPATH_COMPONENT . DIRECTORY_SEPARATOR . "helpers" . DIRECTORY_SEPARATOR . "tooltip.php");
         JModelLegacy::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_users/models', 'UsersModel');
         $this->model = JModelLegacy::getInstance('Group', 'UsersModel', array('ignore_request' => true));
+        $this->user = $user;
+        $this->credential = $credential;
     }
 
-    public function getList(\Joomla\CMS\User\User $user)
+    public function prepare(array &$data)
     {
         try {
-            $data = array();
-            foreach (JAccess::getGroupsByUser($user->get('id'), false) as $id) {
-                if ($row = $this->findRowById($id)) {
-                    $data[] = $row;
+            if ($name = $this->credential->matchBehaviorsTemplate('groups')) {
+                $groups = array();
+                foreach (JAccess::getGroupsByUser($this->user->get('id'), false) as $id) {
+                    if ($row = $this->findRowById($id)) {
+                        $groups[$row->id] = array(
+                            "idnumber" => $row->id,
+                            "name" => $row->title,
+                            "description" => $row->title
+                        );
+                    }
                 }
+                $data[$name] = array_values($groups);
             }
-            return $data;
         } catch (Exception $ex) {
             throw $ex;
         }
     }
 
-    public function findRowById($id)
+    private function findRowById($id)
     {
         try {
             $data = null;

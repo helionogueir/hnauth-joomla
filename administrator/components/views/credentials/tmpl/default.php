@@ -5,10 +5,13 @@
             <tr>
                 <th width="2%"><?php echo JText::_('COM_HNAUTH_CREDENTIAL_ID'); ?></th>
                 <th width="2%"><?php echo JHtml::_('grid.checkall'); ?></th>
-                <th width="5%"><?php echo JText::_('COM_HNAUTH_CREDENTIAL_CODE'); ?></th>
+                <th width="5%"><?php echo JText::_('COM_HNAUTH_CREDENTIAL_TEMPLATE'); ?></th>
+                <th><?php echo JText::_('COM_HNAUTH_CREDENTIAL_AUTHNAME'); ?></th>
                 <th><?php echo JText::_('COM_HNAUTH_CREDENTIAL_TITLE'); ?></th>
                 <th><?php echo JText::_('COM_HNAUTH_CREDENTIAL_URI'); ?></th>
                 <th><?php echo JText::_('COM_HNAUTH_CREDENTIAL_PUBLICKEY'); ?></th>
+                <th><?php echo JText::_('COM_HNAUTH_CREDENTIAL_TTL'); ?></th>
+                <th><?php echo JText::_('COM_HNAUTH_CREDENTIAL_ALGORITHM'); ?></th>
                 <th width="5%"><?php echo JText::_('COM_HNAUTH_CREDENTIAL_PUBLISHED'); ?></th>
             </tr>
         </thead>
@@ -22,10 +25,13 @@
                     <tr>
                         <td><?php echo $this->pagination->getRowOffset($i); ?></td>
                         <td><?php echo JHtml::_('grid.id', $i, $row->id); ?></td>
-                        <td><a href="<?php echo $link; ?>"><?php echo $row->code; ?></a></td>
+                        <td><a href="<?php echo $link; ?>"><?php echo $row->template; ?></a></td>
+                        <td><a href="<?php echo $link; ?>"><?php echo $row->authname; ?></a></td>
                         <td><a href="<?php echo $link; ?>"><?php echo $row->title; ?></a></td>
                         <td><a href="<?php echo $row->uri; ?>" target="_blank"><?php echo $row->uri; ?></a></td>
                         <td><?php echo $row->publickey; ?></td>
+                        <td><?php echo $row->ttl; ?></td>
+                        <td><?php echo $row->algorithm; ?></td>
                         <td style="align:center;"><?php echo JHtml::_('jgrid.published', $row->published, $i, 'credentials.', true, 'cb'); ?></td>
                     </tr>
                 <?php endforeach; ?>

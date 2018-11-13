@@ -7,11 +7,16 @@ class HnAuthModelCredentials extends JModelList
 
     private $_fields = array(
         'id',
-        'code',
+        'template',
+        'usergroupid',
+        'authname',
         'title',
         'uri',
         'publickey',
         'secretkey',
+        'ttl',
+        'algorithm',
+        'behaviors',
         'obs',
         'created',
         'modified',
@@ -35,7 +40,7 @@ class HnAuthModelCredentials extends JModelList
         $search = $this->getState('filter.search');
         if (!empty($search)) {
             $like = $db->quote('%' . $search . '%');
-            $query->where('code LIKE ' . $like);
+            $query->where('template LIKE ' . $like);
             $query->where('title LIKE ' . $like);
         }
         $published = $this->getState('filter.published');
