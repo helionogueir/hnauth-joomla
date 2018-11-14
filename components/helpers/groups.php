@@ -26,8 +26,7 @@ class HnAuthGroups
                     if ($row = $this->findRowById($id)) {
                         $groups[$row->id] = array(
                             "idnumber" => $row->id,
-                            "name" => $row->title,
-                            "description" => $row->title
+                            "name" => $row->title
                         );
                     }
                 }
