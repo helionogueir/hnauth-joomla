@@ -46,7 +46,7 @@ class HnAuthGroups
                 $query = $db->getQuery(true)
                     ->select('id, title')
                     ->from($db->quoteName($this->model->getTable()->getTableName()))
-                    ->where("id = '{$id}'");
+                    ->where("id = {$db->quote($id)}");
                 if ($row = $db->setQuery($query)->loadObject()) {
                     $data = $row;
                 }

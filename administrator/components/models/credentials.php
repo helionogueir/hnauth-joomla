@@ -40,12 +40,12 @@ class HnAuthModelCredentials extends JModelList
         $search = $this->getState('filter.search');
         if (!empty($search)) {
             $like = $db->quote('%' . $search . '%');
-            $query->where('template LIKE ' . $like);
-            $query->where('title LIKE ' . $like);
+            $query->where("template LIKE {$like}");
+            $query->where("title LIKE {$like}");
         }
         $published = $this->getState('filter.published');
         if (is_numeric($published)) {
-            $query->where('published = ' . (int)$published);
+            $query->where("published = {$db->quote($published)}");
         } elseif ($published === '') {
             $query->where('(published IN (0, 1))');
         }

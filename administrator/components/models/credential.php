@@ -65,7 +65,7 @@ class HnAuthModelCredential extends JModelAdmin
             $query->select(implode(",", $this->_fields))
                 ->from($db->quoteName('#__hnauth_credential'))
                 ->where('published = 1')
-                ->where("authname = '{$authname}'");
+                ->where("authname = {$db->quote($authname)}");
             if ($row = $db->setQuery($query)->loadObject()) {
                 $data = $row;
             }
